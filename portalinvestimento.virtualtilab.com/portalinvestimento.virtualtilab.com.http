@@ -1,0 +1,6 @@
+@portalinvestimento.virtualtilab.com_HostAddress = http://localhost:5210
+
+GET {{portalinvestimento.virtualtilab.com_HostAddress}}/weatherforecast/
+Accept: application/json
+
+###
