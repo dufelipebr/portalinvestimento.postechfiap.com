@@ -1,3 +1,6 @@
+Modelo de negocios
+https://www.notion.so/Bronco-Tec-Insurance-Inc-c94411eed1ff47f3aa70f4dfbe56ce73
+
 egon.io : Modelo de casos de uso
 https://egon.io/
 
@@ -5,7 +8,11 @@ Eventos modelagem , Storytelling
 https://miro.com/pt/signup/
 
 Notion.IO 
-DocumentaÃ§Ã£o 
+Documentação 
 https://www.notion.so/6951a26be73f4739be47271f68cdde1c?v=1c2f18f66cfd48f3bf02ce8252ca4ba2
+
+
+
+
 
 
