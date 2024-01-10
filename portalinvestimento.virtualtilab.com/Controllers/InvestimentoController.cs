@@ -1,3 +1,4 @@
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using portalinvestimento.virtualtilab.com.Entity;
 using portalinvestimento.virtualtilab.com.Interfaces;
@@ -26,6 +27,7 @@ namespace portalinvestimento.virtualtilab.com.Controllers
             _logger = logger;
         }
 
+        [Authorize]
         [HttpGet("GetInvestimentoAll")]
         //public IEnumerable<Investimento> GetInvestimentoList()
         public IActionResult GetInvestimentoList()
@@ -43,6 +45,7 @@ namespace portalinvestimento.virtualtilab.com.Controllers
             return Ok(_investimentoRepository.ObterTodos());
         }
 
+        [Authorize]
         [HttpGet("GetInvestimentoByID/{id:int}")]
         public Investimento GetInvestimentoByID(int id)
         {
@@ -50,27 +53,14 @@ namespace portalinvestimento.virtualtilab.com.Controllers
 
         }
 
+        [Authorize]
         [HttpGet("GetCarteira/{id}")]
         public Carteira GetCarteira(int ID)
         {
             return (Carteira)_carteiraRepository.ObterPorId(ID);
         }
 
-        [HttpGet("Authenticate/{user}/{pwd}")]
-        public string Authenticate(string user, string pwd)
-        {
-            //if (user == "system" && pwd == "123")
-            //{
-
-            //}
-            //else
-            //{
-            //    throw new Exception("auth error not valid user.");
-            //}
-            return "ok";
-
-        }
-
+        [Authorize]
         [HttpPost("CriarCarteira")]
         public void CriarCarteira(Carteira newCarteira)
         {
@@ -92,11 +82,105 @@ namespace portalinvestimento.virtualtilab.com.Controllers
                 throw new Exception("erro3: dados invalidos para carteira, verifique informações.");
         }
 
-
+        //[Authorize(Roles = Permissoes.Administrador)]
+        [Authorize]
         [HttpGet("GetAllUsers")]
-        public IEnumerable<Usuario> GetAllUsers()
+        public IActionResult GetAllUsers()
         {
-            return _usuarioRepository.ObterTodos();
+            _logger.Log(LogLevel.Information, "Iniciando GetAllUsers...");
+
+            try
+            {
+                //return _usuarioRepository.ObterTodos();
+                return Ok(_usuarioRepository.ObterTodos());
+            }
+            catch (Exception ex)
+            {
+                _logger.LogError($"erro na _usuarioRepository.ObterTodos() ex: {ex.Message}");
+                return BadRequest(ex.Message);
+            }
+        }
+
+        /// <summary>
+        /// Adiciona usuário na lista de usuarios do sistema. É aberto ao publico
+        /// </summary>
+        /// <param name="nome">Nome do usuario</param>
+        /// <param name="pass">Senha do usuario</param>
+        /// <param name="email">Email do usuario</param>
+        /// <param name="tipoPermissao">1 - Administrador e 2 - Funcionario</param>
+        /// <returns>IActionResult com resultado da operação</returns>
+        /// <remarks> Exemplo: AddUser("carlos", "12345", "carlosedu@itnext.com.br", 1)</remarks>
+        /// <response code="200">sucesso</response>
+        /// <response code="401">Não autenticado</response>
+        /// <response code="403">Não autorizado</response>
+        /// <response code="501">Erro</response>
+        [HttpPost("AddUser")]
+        public IActionResult AddUser(string nome, string pass, string email, int tipoPermissao)
+        {
+            _logger.Log(LogLevel.Information, "Iniciando AddUser...");
+
+            try
+            {
+                //return _usuarioRepository.ObterTodos();
+                Usuario u = new Usuario();
+                u.Nome = nome;
+                u.Senha = pass;
+                u.Email = email;
+                u.TipoPermissao = (EnTipoAcesso) tipoPermissao;
+                _usuarioRepository.Cadastrar(u);
+                return Ok("user cadastrado com sucesso");
+            }
+            catch (Exception ex)
+            {
+                _logger.LogError($"erro na AddUser() ex: {ex.Message}");
+                return BadRequest(ex.Message);
+            }
+        }
+
+        [Authorize(Roles = Permissoes.Administrador)]
+        [HttpPut("ModifyUser")]
+        public IActionResult ChangeUser(int id, string nome, string pass, string email, int tipoPermissao)
+        {
+            _logger.Log(LogLevel.Information, "Iniciando ModifyUser...");
+
+            try
+            {
+                //return _usuarioRepository.ObterTodos();
+                Usuario u = new Usuario();
+                u.Id = id;
+                u.Nome = nome;
+                u.Senha = pass;
+                u.Email = email;
+                u.TipoPermissao = (EnTipoAcesso)tipoPermissao;
+                _usuarioRepository.Alterar(u);
+                return Ok("user alterado com sucesso");
+            }
+            catch (Exception ex)
+            {
+                _logger.LogError($"erro na ModifyUser() ex: {ex.Message}");
+                return BadRequest(ex.Message);
+            }
+        }
+
+        [Authorize(Roles = Permissoes.Administrador)]
+        [HttpDelete("DeleteUser")]
+        public IActionResult DeleteUser(int id)
+        {
+            _logger.Log(LogLevel.Information, "Iniciando DeleteUser...");
+
+            try
+            {
+                //return _usuarioRepository.ObterTodos();
+                Usuario u = new Usuario();
+                u.Id = id;
+                _usuarioRepository.Deletar(u);
+                return Ok("user excluido com sucesso");
+            }
+            catch (Exception ex)
+            {
+                _logger.LogError($"erro na DeleteUser() ex: {ex.Message}");
+                return BadRequest(ex.Message);
+            }
         }
     }
 }

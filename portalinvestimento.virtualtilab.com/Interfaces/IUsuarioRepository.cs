@@ -5,6 +5,6 @@ namespace portalinvestimento.virtualtilab.com.Interfaces
 {
     public interface IUsuarioRepository : IRepository<Usuario>
     {
-
+        public Usuario ObterPorNomeUsuarioESenha(string email, string senha);
     }
 }

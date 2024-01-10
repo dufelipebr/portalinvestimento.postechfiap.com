@@ -11,5 +11,26 @@
 
         public string Senha { get; set; }
 
+        public EnTipoAcesso TipoPermissao { get; set; }
+
+        public Usuario(CadastrarUsuarioDTO cad)
+        {
+            this.Nome = cad.Nome;
+            this.Senha = cad.Senha;
+            this.TipoPermissao = cad.TipoAcesso;
+            this.Email = cad.Email;
+        }
+        public Usuario(AlterarUsuarioDTO cad)
+        {
+            this.Nome = cad.Nome;
+            this.Senha = cad.Senha;
+            this.TipoPermissao = cad.TipoAcesso;
+            this.Email = cad.Email;
+        }
+
+        public Usuario()
+        {
+        }
+
     }
 }

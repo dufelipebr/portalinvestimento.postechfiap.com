@@ -1,0 +1,18 @@
+<?xml version="1.0"?>
+<doc>
+    <assembly>
+        <name>portalinvestimento.virtualtilab.com</name>
+    </assembly>
+    <members>
+        <member name="M:portalinvestimento.virtualtilab.com.Controllers.InvestimentoController.AddUser(System.String,System.String,System.String,System.Int32)">
+            <summary>
+            Adiciona usuário na lista de usuarios do sistema. É aberto ao publico
+            </summary>
+            <param name="nome">Nome do usuario</param>
+            <param name="pass">Senha do usuario</param>
+            <param name="email">Email do usuario</param>
+            <param name="tipoPermissao">1 - Administrador e 2 - Funcionario</param>
+            <returns></returns>
+        </member>
+    </members>
+</doc>
