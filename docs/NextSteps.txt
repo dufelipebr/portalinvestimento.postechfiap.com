@@ -1,0 +1,11 @@
+1) Reuniões com Renato para detalhamento de requisitos (16/1 e 18/1 as 21hrs) 
+2) Verificar como funciona o MVC do MongoDb (semana que vem) quem pode ??? 
+https://www.macoratti.net/15/11/crud_mongo1.htm
+https://learn.microsoft.com/en-us/aspnet/core/tutorials/first-mongo-app?view=aspnetcore-8.0&tabs=visual-studio
+Conectar com nossa base e fazer uns inserts rapidos.
+3) especificação inicial de classes de negocio (semana que vem) - Carlos\Hori\Pedro 
+4) especificação de contratação e custos modelos SAAS - Renato\Carlos
+5) especificação de UI e telas do BroncoCli - (todos marcar reunião)
+5) especificação de UI e telas do BroncoBackOffice - (todos marcar reunião)
+5) especificação de UI e telas do Corretor - (todos marcar reunião)
+6) especificação dos eventos eventstorm. (todos marcar reunião)
