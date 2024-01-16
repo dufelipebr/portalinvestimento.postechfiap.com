@@ -14,7 +14,7 @@ using System.Reflection;
 [assembly: System.Reflection.AssemblyCompanyAttribute("portalinvestimento.virtualtilab.com")]
 [assembly: System.Reflection.AssemblyConfigurationAttribute("Debug")]
 [assembly: System.Reflection.AssemblyFileVersionAttribute("1.0.0.0")]
-[assembly: System.Reflection.AssemblyInformationalVersionAttribute("1.0.0+cc582f49d456f79a8a15cd7203ccec211c4291e7")]
+[assembly: System.Reflection.AssemblyInformationalVersionAttribute("1.0.0+2c1584baf4ead1229a895e4adc716686696ff187")]
 [assembly: System.Reflection.AssemblyProductAttribute("portalinvestimento.virtualtilab.com")]
 [assembly: System.Reflection.AssemblyTitleAttribute("portalinvestimento.virtualtilab.com")]
 [assembly: System.Reflection.AssemblyVersionAttribute("1.0.0.0")]

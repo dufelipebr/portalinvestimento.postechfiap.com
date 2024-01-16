@@ -12,7 +12,12 @@
             <param name="pass">Senha do usuario</param>
             <param name="email">Email do usuario</param>
             <param name="tipoPermissao">1 - Administrador e 2 - Funcionario</param>
-            <returns></returns>
+            <returns>IActionResult com resultado da operação</returns>
+            <remarks> Exemplo: AddUser("carlos", "12345", "carlosedu@itnext.com.br", 1)</remarks>
+            <response code="200">sucesso</response>
+            <response code="401">Não autenticado</response>
+            <response code="403">Não autorizado</response>
+            <response code="501">Erro</response>
         </member>
     </members>
 </doc>

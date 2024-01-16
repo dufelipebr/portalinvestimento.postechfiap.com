@@ -2,15 +2,14 @@
 {
     public class Usuario : Entidade
     {
+        #region Construtor
+        public Usuario()
+        {
+        }
         public Usuario(int _id, String _nome) {
             this.Id = _id;
             this.Nome = _nome;
         }
-        public string Email { get; set; }
-        public string Nome { get; set; }
-
-        public string Senha { get; set; }
-
         public EnTipoAcesso TipoPermissao { get; set; }
 
         public Usuario(CadastrarUsuarioDTO cad)
@@ -28,8 +27,15 @@
             this.Email = cad.Email;
         }
 
-        public Usuario()
+        #endregion
+
+        public string Email { get; set; }
+        public string Nome { get; set; }
+
+        public string Senha { get; set; }
+        public override void ValidateEntity()
         {
+            return;
         }
 
     }

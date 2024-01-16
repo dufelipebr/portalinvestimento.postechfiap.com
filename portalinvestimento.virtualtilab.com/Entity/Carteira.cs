@@ -26,5 +26,10 @@
         public string Email { get; set; }
         public string Endereco { get; set; }
         public IList<Investimento> Investimentos { get; set; }
+
+        public override void ValidateEntity()
+        {
+            return; 
+        }
     }
 }

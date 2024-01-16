@@ -17,14 +17,16 @@ namespace portalinvestimento.virtualtilab.com.Controllers
         //private ILoggerFactory _loggerFactory;
         //private ILoggerProvider _loggerProvider;
         private readonly ILogger<InvestimentoController> _logger;
+        private readonly IInvestimentoService _investimentoService;
 
 
-        public InvestimentoController(IInvestimentoRepository repository, ICarteiraRepository carteiraRepository, IUsuarioRepository usuarioRepository, ILogger<InvestimentoController> logger)
+        public InvestimentoController(IInvestimentoRepository repository, ICarteiraRepository carteiraRepository, IUsuarioRepository usuarioRepository, ILogger<InvestimentoController> logger, IInvestimentoService investimentoService)
         {
             _investimentoRepository = repository;
             _carteiraRepository = carteiraRepository;
             _usuarioRepository = usuarioRepository;
             _logger = logger;
+            _investimentoService = investimentoService;
         }
 
         [Authorize]
@@ -50,6 +52,28 @@ namespace portalinvestimento.virtualtilab.com.Controllers
         public Investimento GetInvestimentoByID(int id)
         {
             return (Investimento)_investimentoRepository.ObterPorId(id);
+
+        }
+
+        [Authorize]
+        [HttpPost("CriarInvestimento")]
+        public IActionResult CriarInvestimento(Investimento newInvestimento)
+        {
+            ////Regex cpfRx = new Regex(@"^(((\d{3}).(\d{3}).(\d{3})-(\d{2}))?((\d{2}).(\d{3}).(\d{3})/(\d{4})-(\d{2}))?)*$", RegexOptions.None);
+            ////Regex emailRx = new Regex(@"^([-a-zA-Z0-9_-]*@(gmail|yahoo|ymail|rocketmail|bol|hotmail|live|msn|ig|globomail|oi|pop|inteligweb|r7|folha|zipmail).(com|info|gov|net|org|tv)(.[-a-z]{2})?)*$");
+
+            //Carteira ct = (Carteira)_carteiraRepository.GetCarteiraByID(newCarteira.CodigoConta, newCarteira.DigitoConta);
+            //if (ct != null) throw new Exception("erro02: carteira já existente");
+
+            _logger.Log(LogLevel.Information, "Iniciando CriarInvestimento...");
+
+            string resultValidation = _investimentoService.Create(newInvestimento);
+            if (resultValidation == "")
+                _investimentoRepository.Cadastrar(newInvestimento);
+            else
+                return BadRequest(resultValidation);
+
+            return Ok("investimento criado com sucesso");
 
         }
 

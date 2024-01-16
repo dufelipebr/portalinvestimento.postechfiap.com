@@ -19,6 +19,8 @@ namespace portalinvestimento.virtualtilab.com.Entity
             Rentabilidade_Ultimo_12meses = rent_12;
             Rentabilidade_Ultimo_24meses = rent_24;
 
+            ValidateEntity();
+
         }
         public enum enTipoInvestimento
         {
@@ -43,6 +45,20 @@ namespace portalinvestimento.virtualtilab.com.Entity
         //Pagamento Resgate: D+3
         //valor minimo permancia: abaixo desse valor não pode ficar
         //
+
+        public override void ValidateEntity()
+        {
+            AssertionConcern.AssertArgumentNotEmpty(Codigo, "Codigo precisa ser preenchido.");
+            AssertionConcern.AssertArgumentNotEmpty(Nome, "Nome precisa ser preenchido.");
+            AssertionConcern.AssertArgumentLength(Codigo, 10, "Investimento precisa ter no maximo 10 caracteres.");
+            AssertionConcern.AssertArgumentLength(Nome, 50, "Nome do Investimento precisa ter no maximo 50 caracteres.");
+            AssertionConcern.AssertArgumentRange((double)TaxaADM, 0.1, 10, "Taxa ADM precisa estar entre 0.1 e 10.");
+            AssertionConcern.AssertArgumentRange((double)AporteMinimo, 0.1, 1000000, "Taxa ADM precisa estar entre 0.1 e 10.");
+            AssertionConcern.AssertArgumentNotEquals(TipoInvestimento, 0, "Tipo Investimento precisa ser preenchido");
+            AssertionConcern.AssertArgumentTrue(Nome.Trim() == "", "Nome precisa ser preechido");
+            //throw new NotImplementedException();
+        }
+
 
     }
 }

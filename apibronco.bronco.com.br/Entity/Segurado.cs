@@ -8,6 +8,11 @@
         public string RG{ get; set; }
 
         public DateTime Data_Nascimento { get; set; }
-        //public End Endereco { get; set; }
+        public Endereco Endereco_Segurado { get; set; }
+        public string Telefone_Comercial { get; set; }
+
+        public string Telefone_Residencial { get; set; }
+
+        public string Celular { get; set; }
     }
 }

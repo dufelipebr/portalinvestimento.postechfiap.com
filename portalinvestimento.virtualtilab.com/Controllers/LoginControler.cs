@@ -2,7 +2,6 @@
 using Microsoft.AspNetCore.Mvc;
 using portalinvestimento.virtualtilab.com.Entity;
 using portalinvestimento.virtualtilab.com.Interfaces;
-using portalinvestimento.virtualtilab.com.Services;
 namespace portalinvestimento.virtualtilab.com.Controllers
 {
     [ApiController]

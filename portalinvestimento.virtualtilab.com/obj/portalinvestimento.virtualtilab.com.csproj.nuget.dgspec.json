@@ -1,17 +1,17 @@
 {
   "format": 1,
   "restore": {
-    "C:\\GIT\\portalinvestimento.virtualtilab.com\\portalinvestimentosfiap\\portalinvestimento.virtualtilab.com\\portalinvestimento.virtualtilab.com.csproj": {}
+    "C:\\GIT\\portalinvestimento.virtualtilab.com\\broncoproject\\broncoproject\\portalinvestimento.virtualtilab.com\\portalinvestimento.virtualtilab.com.csproj": {}
   },
   "projects": {
-    "C:\\GIT\\portalinvestimento.virtualtilab.com\\portalinvestimentosfiap\\portalinvestimento.virtualtilab.com\\portalinvestimento.virtualtilab.com.csproj": {
+    "C:\\GIT\\portalinvestimento.virtualtilab.com\\broncoproject\\broncoproject\\portalinvestimento.virtualtilab.com\\portalinvestimento.virtualtilab.com.csproj": {
       "version": "1.0.0",
       "restore": {
-        "projectUniqueName": "C:\\GIT\\portalinvestimento.virtualtilab.com\\portalinvestimentosfiap\\portalinvestimento.virtualtilab.com\\portalinvestimento.virtualtilab.com.csproj",
+        "projectUniqueName": "C:\\GIT\\portalinvestimento.virtualtilab.com\\broncoproject\\broncoproject\\portalinvestimento.virtualtilab.com\\portalinvestimento.virtualtilab.com.csproj",
         "projectName": "portalinvestimento.virtualtilab.com",
-        "projectPath": "C:\\GIT\\portalinvestimento.virtualtilab.com\\portalinvestimentosfiap\\portalinvestimento.virtualtilab.com\\portalinvestimento.virtualtilab.com.csproj",
+        "projectPath": "C:\\GIT\\portalinvestimento.virtualtilab.com\\broncoproject\\broncoproject\\portalinvestimento.virtualtilab.com\\portalinvestimento.virtualtilab.com.csproj",
         "packagesPath": "C:\\Users\\s22dv2\\.nuget\\packages\\",
-        "outputPath": "C:\\GIT\\portalinvestimento.virtualtilab.com\\portalinvestimentosfiap\\portalinvestimento.virtualtilab.com\\obj\\",
+        "outputPath": "C:\\GIT\\portalinvestimento.virtualtilab.com\\broncoproject\\broncoproject\\portalinvestimento.virtualtilab.com\\obj\\",
         "projectStyle": "PackageReference",
         "fallbackFolders": [
           "C:\\Program Files (x86)\\Microsoft Visual Studio\\Shared\\NuGetPackages"

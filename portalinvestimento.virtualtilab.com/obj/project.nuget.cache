@@ -1,8 +1,8 @@
 {
   "version": 2,
-  "dgSpecHash": "Slm6W/uZlYWuN+lHIu7Rw00mdy9onvYW/VbnyL3dn15hJBfDgNxQrs3n9FdREA8krqvXkf0o24FlCO+SZN33MA==",
+  "dgSpecHash": "a54gq6oVoohmnNwUDfP1cIClzv8Wep4Q4ponQWBxoIrxXSkoLf+OiXhv8cG02tCr9sdLU27j9tnv9lVsnoPcNA==",
   "success": true,
-  "projectFilePath": "C:\\GIT\\portalinvestimento.virtualtilab.com\\portalinvestimentosfiap\\portalinvestimento.virtualtilab.com\\portalinvestimento.virtualtilab.com.csproj",
+  "projectFilePath": "C:\\GIT\\portalinvestimento.virtualtilab.com\\broncoproject\\broncoproject\\portalinvestimento.virtualtilab.com\\portalinvestimento.virtualtilab.com.csproj",
   "expectedPackageFiles": [
     "C:\\Users\\s22dv2\\.nuget\\packages\\microsoft.aspnetcore.authentication.jwtbearer\\8.0.0\\microsoft.aspnetcore.authentication.jwtbearer.8.0.0.nupkg.sha512",
     "C:\\Users\\s22dv2\\.nuget\\packages\\microsoft.extensions.apidescription.server\\6.0.5\\microsoft.extensions.apidescription.server.6.0.5.nupkg.sha512",
