@@ -1,4 +1,7 @@
-﻿using portalinvestimento.virtualtilab.com.Entity;
+﻿using investminimalapi.virtualitlab.com.Repository;
+using System.Data.SqlClient;
+using Microsoft.OpenApi.Models;
+using portalinvestimento.virtualtilab.com.Entity;
 using portalinvestimento.virtualtilab.com.Interfaces;
 using System.Collections;
 using System.Collections.Generic;
@@ -6,75 +9,216 @@ using static portalinvestimento.virtualtilab.com.Entity.Investimento;
 
 namespace portalinvestimento.virtualtilab.com.Repository
 {
-    public class InvestimentoRepository : IInvestimentoRepository
+    public class InvestimentoRepository : DapperRepository<Investimento>, IInvestimentoRepository
     {
-        //private IList<Investimento> _listaInvestimento = new List<Investimento>();
-        //public void InsertInvestimento(Investimento item)
-        //{
-        //    _listaInvestimento.Add(item);
-        //}
-
-        //public void AlterInvestimento(Investimento investimento)
-        //{
-        //    Investimento i = GetInvestimentoById(investimento.Codigo);
-        //    if (i != null)
-        //    {
-        //        i.Nome = investimento.Nome;
-        //    }
-        //}
-
-        //public void DeleteInvestimento(string id)
-        //{
-        //    Investimento i = GetInvestimentoById(id);
-        //    if (i != null)
-        //    {
-        //        //_listaInvestimento.Remove(inv => inv.Codigo== id);
-        //        _listaInvestimento.Remove(i);
-        //    }
-        //}
-
-        //public Investimento GetInvestimentoById(string id)
-        //{
-        //    return _listaInvestimento.FirstOrDefault(investimento => investimento.Codigo == id);
-        //}
-
-        //public IList<Investimento> GetInvestimentoList()
-        //{
-        //    if (_listaInvestimento.Count ==0)
-        //    {
-        //        _listaInvestimento.Add(new Investimento(enTipoInvestimento.Acoes, "ações Petrobras", "0001", 3, 5000, 7.1M, 5.2M, 4.1M));
-        //        _listaInvestimento.Add(new Investimento(enTipoInvestimento.CDI, "CDI FIAP", "0002", 0.1M, 0, 2.1M, 12.1M, 25.7M));
-        //        _listaInvestimento.Add(new Investimento(enTipoInvestimento.Tesouro, "Tesouro Selic", "0003", 0, 0, 1.8M, 10.6M, 19.1M));
-        //        _listaInvestimento.Add(new Investimento(enTipoInvestimento.CDB, "CDB FIAP PLUS 5", "0004", 0.5M, 1000, 3.1M, 18.2M, 23.4M));
-        //        _listaInvestimento.Add(new Investimento(enTipoInvestimento.LDI_LDA, "LCI LCA FIAP", "0005", 0, 100, 1.0M, 12.0M, 20.1M));
-        //    }
-
-        //    return _listaInvestimento;
-        //}
-
-        public IList<Investimento> ObterTodos()
+        public InvestimentoRepository(IConfiguration configuration) : base(configuration)
         {
-            throw new NotImplementedException();
+
         }
 
-        public Investimento ObterPorId(int id)
+
+        public override void Alterar(Investimento entidade)
         {
-            throw new NotImplementedException();
+            using var dbConnection = new SqlConnection(ConnectionString);
+
+
+            try
+            {
+                using (SqlCommand cmd = dbConnection.CreateCommand())
+                {
+                    //dbConnection.Query("");
+                    cmd.CommandText = "update Investimento " +
+                        "set " +
+                        " Id_Tipo_Investimento = @Id_Tipo_Investimento," +
+                        " Nome = @Nome, " +
+                        " Codigo = @Codigo, " +
+                        " Taxa_ADM = @Taxa_ADM, " +
+                        " Aporte_Minimo = @Aporte_Minimo, " +
+                        " Rentabilidade_Ultimo_3meses = @Rentabilidade_Ultimo_3meses, " +
+                        " Rentabilidade_Ultimo_12meses = @Rentabilidade_Ultimo_12meses, " +
+                        " Rentabilidade_Ultimo_24meses = @Rentabilidade_Ultimo_24meses, " +
+                        " Deleted = @Deleted," +
+                        " Slug = @Slug, " +
+                        " Last_Changed = @Last_Changed," +
+                        " Status = @Status " +
+                        " where Id = @Id";
+                    
+                    cmd.Parameters.AddWithValue("@Id_Tipo_Investimento", (int) entidade.TipoInvestimento);
+                    cmd.Parameters.AddWithValue("@Nome", entidade.Nome);
+                    cmd.Parameters.AddWithValue("@Codigo", entidade.Codigo);
+                    cmd.Parameters.AddWithValue("@Taxa_ADM", entidade.TaxaADM);
+                    cmd.Parameters.AddWithValue("@Aporte_Minimo", entidade.AporteMinimo);
+                    cmd.Parameters.AddWithValue("@Rentabilidade_Ultimo_3meses", entidade.RentabilidadeUltimo_3meses);
+                    cmd.Parameters.AddWithValue("@Rentabilidade_Ultimo_12meses", entidade.Rentabilidade_Ultimo_12meses);
+                    cmd.Parameters.AddWithValue("@Rentabilidade_Ultimo_24meses", entidade.Rentabilidade_Ultimo_24meses);
+                    cmd.Parameters.AddWithValue("@Id", entidade.Id);
+
+                    cmd.Parameters.AddWithValue("@Deleted", 0);
+                    cmd.Parameters.AddWithValue("@Slug", $"{DateTime.Now} registro modificado");
+                    cmd.Parameters.AddWithValue("@Last_Changed", DateTime.Now);
+                    cmd.Parameters.AddWithValue("@Status", (int)EntityStatus.Active);
+                    dbConnection.Open();
+                    cmd.ExecuteNonQuery();
+                }
+            }
+            catch
+            {
+                throw;
+            }
+            finally
+            {
+                dbConnection.Close();
+            }
         }
 
-        public void Cadastrar(Investimento entidade)
+        public override void Cadastrar(Investimento entidade)
         {
-            throw new NotImplementedException();
+            using var dbConnection = new SqlConnection(ConnectionString);
+
+
+            try
+            {
+                using (SqlCommand cmd = dbConnection.CreateCommand())
+                {
+                    //dbConnection.Query("");
+                    cmd.CommandText = "insert into Investimento (Id_Tipo_Investimento, " +
+                        "Nome, " +
+                        "Codigo, " +
+                        "Descricao, " +
+                        "Taxa_ADM, " + 
+                        "Aporte_Minimo, " +
+                        "Rentabilidade_Ultimo_3meses, "+
+                        "Rentabilidade_Ultimo_12meses, "+
+                        "Rentabilidade_Ultimo_24meses, " +
+                        "Deleted,  "+
+                        "Slug,  " +
+                        "Publish_Date," +
+                        "Status" +
+                        ") values (" +
+                        "@Id_Tipo_Investimento, " +
+                        "@Nome, " +
+                        "@Codigo, " +
+                        "@Descricao, " +
+                        "@TaxaADM, " +
+                        "@AporteMinimo, " +
+                        "@RentabilidadeUltimo_3meses, " +
+                        "@Rentabilidade_Ultimo_12meses, " +
+                        "@Rentabilidade_Ultimo_24meses, " +
+                        "@Deleted, " +
+                        "@Slug, " +
+                        "@Publish_Date, " +
+                        "@Status)";
+                    //cmd.Parameters.AddWithValue("@Id", entidade.Id);
+                    cmd.Parameters.AddWithValue("@Id_Tipo_Investimento", (int) entidade.TipoInvestimento);
+                    cmd.Parameters.AddWithValue("@Nome", entidade.Nome.ToString());
+                    cmd.Parameters.AddWithValue("@Codigo", entidade.Codigo.ToString());
+                    cmd.Parameters.AddWithValue("@Descricao", entidade.Descricao.ToString());
+                    cmd.Parameters.AddWithValue("@TaxaADM", (decimal)entidade.TaxaADM);
+                    cmd.Parameters.AddWithValue("@AporteMinimo", (decimal)entidade.AporteMinimo);
+                    cmd.Parameters.AddWithValue("@RentabilidadeUltimo_3meses", (decimal)entidade.RentabilidadeUltimo_3meses);
+                    cmd.Parameters.AddWithValue("@Rentabilidade_Ultimo_12meses", (decimal)entidade.Rentabilidade_Ultimo_12meses);
+                    cmd.Parameters.AddWithValue("@Rentabilidade_Ultimo_24meses", (decimal)entidade.Rentabilidade_Ultimo_24meses);
+                    
+                    cmd.Parameters.AddWithValue("@Deleted", 0);
+                    cmd.Parameters.AddWithValue("@Slug", $"{DateTime.Now} registro criado");
+                    cmd.Parameters.AddWithValue("@Publish_Date", DateTime.Now);
+                    cmd.Parameters.AddWithValue("@Status", (int) EntityStatus.Active);
+                    dbConnection.Open();
+                    cmd.ExecuteNonQuery();
+                }
+            }
+            catch
+            {
+                throw;
+            }
+            finally
+            {
+                dbConnection.Close();
+            }
         }
 
-        public void Alterar(Investimento entidade)
+        public override void Deletar(Investimento entidade)
         {
-            throw new NotImplementedException();
+            using var dbConnection = new SqlConnection(ConnectionString);
+
+
+            try
+            {
+                using (SqlCommand cmd = dbConnection.CreateCommand())
+                {
+                    //dbConnection.Query("");
+                    //cmd.CommandText = $"update Investimento set Deleted = 0, Status = 0, Slug = '{DateTime.Now} removido da base'  where Id= @Id";
+                    cmd.CommandText = $"delete from Investimento where Id= @Id";
+                    //cmd.Parameters.AddWithValue("@Id", entidade.Id);
+                    cmd.Parameters.AddWithValue("@Id", (int)entidade.Id) ;
+                    dbConnection.Open();
+                    cmd.ExecuteNonQuery();
+                }
+            }
+            catch
+            {
+                throw;
+            }
+            finally
+            {
+                dbConnection.Close();
+            }
         }
 
-        public void Deletar(Investimento entidade)
+        public override Investimento ObterPorId(int id)
         {
-            throw new NotImplementedException();
+            return this.ObterTodos().Where(x => x.Id == id).FirstOrDefault();
         }
+
+        public override IList<Investimento> ObterTodos()
+        {
+            IList<Investimento> list = new List<Investimento>();
+            using (var dbConnection = new SqlConnection(ConnectionString))
+            {
+                try
+                {
+                    dbConnection.Open();
+                    SqlCommand cmd = dbConnection.CreateCommand();
+                    cmd.CommandText = "select * from  Investimento";
+
+                   var rd = cmd.ExecuteReader();
+ 
+                    while (rd.Read())
+                    {
+                        Investimento investimento = new Investimento()
+                        {
+                            Id = Int32.Parse(rd["Id"].ToString()),
+                            Codigo = rd["Codigo"].ToString(),
+                            Nome = rd["Nome"].ToString(),
+                            Descricao = rd["Descricao"].ToString(),
+                            AporteMinimo = (decimal)rd["Aporte_Minimo"],
+                            TipoInvestimento = (enTipoInvestimento)Int32.Parse(rd["Id_Tipo_Investimento"].ToString()),
+                            TaxaADM = (decimal)rd["Taxa_Adm"],
+                            RentabilidadeUltimo_3meses = (decimal)rd["Rentabilidade_Ultimo_3meses"],
+                            Rentabilidade_Ultimo_12meses = (decimal)rd["Rentabilidade_Ultimo_12meses"],
+                            Rentabilidade_Ultimo_24meses = (decimal)rd["Rentabilidade_Ultimo_24meses"]
+                        };
+                        /// implementar o Slug, Deleted... 
+                        investimento.Deleted = (bool) rd["Deleted"];
+                        investimento.PublishDate = (DateTime)rd["Publish_Date"];
+                        investimento.LastChanged = ((rd["Last_Changed"] == DBNull.Value) ? DateTime.MinValue : (DateTime)rd["Last_Changed"]);
+                        investimento.Slug = rd["Slug"].ToString();
+                        investimento.Status =  rd["Status"].ToString()=="0"?EntityStatus.Deactivated: EntityStatus.Active;
+                        list.Add(investimento);
+                    }
+                }
+                catch(Exception ex)
+                {
+                    throw;
+                }
+                finally
+                {
+                    dbConnection.Close();
+                }
+
+                return list;
+            }
+        }
+
     }
 }

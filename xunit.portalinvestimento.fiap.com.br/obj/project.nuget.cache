@@ -1,6 +1,6 @@
 {
   "version": 2,
-  "dgSpecHash": "2QEPpjKOj1XS1Rvd5JoE9UblnC+vZTXgHylzX4ObHNgkEC/mxraEbWYJb7SlqMVjhB+bssFO90P49SRmp7OjkA==",
+  "dgSpecHash": "XTUq6dQwEH3ChabbZXlVmzfL4wfq6dKCQUH1qGzh2fjIxsG5BT8pvVxaBBOtkHyTIMHSZZbc+gbi/F4RcknJiA==",
   "success": true,
   "projectFilePath": "C:\\GIT\\portalinvestimento.virtualtilab.com\\broncoproject\\broncoproject\\xunit.portalinvestimento.fiap.com.br\\xunit.portalinvestimento.fiap.com.br.csproj",
   "expectedPackageFiles": [
@@ -64,7 +64,8 @@
     "C:\\Users\\s22dv2\\.nuget\\packages\\system.collections\\4.3.0\\system.collections.4.3.0.nupkg.sha512",
     "C:\\Users\\s22dv2\\.nuget\\packages\\system.collections.concurrent\\4.3.0\\system.collections.concurrent.4.3.0.nupkg.sha512",
     "C:\\Users\\s22dv2\\.nuget\\packages\\system.console\\4.3.0\\system.console.4.3.0.nupkg.sha512",
-    "C:\\Users\\s22dv2\\.nuget\\packages\\system.data.sqlclient\\4.8.5\\system.data.sqlclient.4.8.5.nupkg.sha512",
+    "C:\\Users\\s22dv2\\.nuget\\packages\\system.data.common\\4.3.0\\system.data.common.4.3.0.nupkg.sha512",
+    "C:\\Users\\s22dv2\\.nuget\\packages\\system.data.sqlclient\\4.8.6\\system.data.sqlclient.4.8.6.nupkg.sha512",
     "C:\\Users\\s22dv2\\.nuget\\packages\\system.diagnostics.debug\\4.3.0\\system.diagnostics.debug.4.3.0.nupkg.sha512",
     "C:\\Users\\s22dv2\\.nuget\\packages\\system.diagnostics.diagnosticsource\\4.3.0\\system.diagnostics.diagnosticsource.4.3.0.nupkg.sha512",
     "C:\\Users\\s22dv2\\.nuget\\packages\\system.diagnostics.eventlog\\6.0.0\\system.diagnostics.eventlog.6.0.0.nupkg.sha512",

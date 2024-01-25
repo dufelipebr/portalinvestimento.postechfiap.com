@@ -14,7 +14,7 @@ using System.Reflection;
 [assembly: System.Reflection.AssemblyCompanyAttribute("xunit.portalinvestimento.fiap.com.br")]
 [assembly: System.Reflection.AssemblyConfigurationAttribute("Debug")]
 [assembly: System.Reflection.AssemblyFileVersionAttribute("1.0.0.0")]
-[assembly: System.Reflection.AssemblyInformationalVersionAttribute("1.0.0+eec1fd2177050da237c754cb896c4d89262d03ee")]
+[assembly: System.Reflection.AssemblyInformationalVersionAttribute("1.0.0+3fd7edbfdf9c554a33e4a0cae7196c0aeb8a5d59")]
 [assembly: System.Reflection.AssemblyProductAttribute("xunit.portalinvestimento.fiap.com.br")]
 [assembly: System.Reflection.AssemblyTitleAttribute("xunit.portalinvestimento.fiap.com.br")]
 [assembly: System.Reflection.AssemblyVersionAttribute("1.0.0.0")]

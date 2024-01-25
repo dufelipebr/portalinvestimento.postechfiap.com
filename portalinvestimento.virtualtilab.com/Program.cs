@@ -55,10 +55,15 @@ builder.Services.AddSwaggerGen(c =>
     c.IncludeXmlComments(xmlPath);
 });
 
+//registrandos repositorios
 builder.Services.AddScoped<IInvestimentoRepository, InvestimentoRepository>();
-builder.Services.AddScoped<ICarteiraRepository, CarteiraRepository>();
+builder.Services.AddScoped<IAplicacaoRepository, AplicacaoRepository>();
 builder.Services.AddScoped<IUsuarioRepository, UsuarioRepository>();
+builder.Services.AddScoped<IRentabilidadeRepository, RentabilidadeRepository>();
+
+//registrandos services
 builder.Services.AddScoped<ITokenService, TokenService>();
+builder.Services.AddScoped<IInvestimentoService, InvestimentoService>();
 
 
 builder.Logging.ClearProviders();
