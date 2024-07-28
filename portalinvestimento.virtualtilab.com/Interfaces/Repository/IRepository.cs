@@ -1,8 +1,8 @@
 ﻿using portalinvestimento.virtualtilab.com.Entity;
 
-namespace investminimalapi.virtualitlab.com.Interfaces
+namespace portalinvestimento.virtualtilab.com.Interfaces.Repository
 {
-    public interface IRepository<T> where T: Entidade
+    public interface IRepository<T> where T : Entidade
     {
         IList<T> ObterTodos();
         T ObterPorId(int id);

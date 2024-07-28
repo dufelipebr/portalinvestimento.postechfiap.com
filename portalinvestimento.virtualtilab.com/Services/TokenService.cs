@@ -1,7 +1,7 @@
 ﻿using Microsoft.AspNetCore.Mvc.Formatters;
 using Microsoft.IdentityModel.Tokens;
 using portalinvestimento.virtualtilab.com.Entity;
-using portalinvestimento.virtualtilab.com.Interfaces;
+using portalinvestimento.virtualtilab.com.Interfaces.Service;
 using System.IdentityModel.Tokens.Jwt;
 using System.Security.Claims;
 using System.Text;

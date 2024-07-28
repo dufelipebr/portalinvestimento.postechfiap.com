@@ -3,7 +3,8 @@ using Microsoft.Extensions.Configuration;
 using Microsoft.IdentityModel.Tokens;
 using Microsoft.OpenApi.Models;
 using portalinvestimento.virtualtilab.com;
-using portalinvestimento.virtualtilab.com.Interfaces;
+using portalinvestimento.virtualtilab.com.Interfaces.Repository;
+using portalinvestimento.virtualtilab.com.Interfaces.Service;
 using portalinvestimento.virtualtilab.com.Repository;
 using portalinvestimento.virtualtilab.com.Services;
 using System.Data.SqlClient;
@@ -56,14 +57,18 @@ builder.Services.AddSwaggerGen(c =>
 });
 
 //registrandos repositorios
-builder.Services.AddScoped<IInvestimentoRepository, InvestimentoRepository>();
+builder.Services.AddScoped<IAtivoRepository, AtivoRepository>();
 builder.Services.AddScoped<IAplicacaoRepository, AplicacaoRepository>();
 builder.Services.AddScoped<IUsuarioRepository, UsuarioRepository>();
 builder.Services.AddScoped<IRentabilidadeRepository, RentabilidadeRepository>();
+builder.Services.AddScoped<IPortfolioRepository, PortfolioRepository>();
+
 
 //registrandos services
 builder.Services.AddScoped<ITokenService, TokenService>();
-builder.Services.AddScoped<IInvestimentoService, InvestimentoService>();
+builder.Services.AddScoped<IAplicacaoService, InvestimentoService>();
+builder.Services.AddScoped<IAtivoService, AtivoService>();
+builder.Services.AddScoped<IPortfolioService, PortfolioService>();
 
 
 builder.Logging.ClearProviders();

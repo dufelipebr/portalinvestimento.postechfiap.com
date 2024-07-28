@@ -1,4 +1,4 @@
-﻿namespace portalinvestimento.virtualtilab.com.Entity
+﻿namespace portalinvestimento.virtualtilab.com.DTO
 {
     public class LoginDTO
     {

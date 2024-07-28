@@ -1,0 +1,11 @@
+﻿{
+  "tipoInvestimento": 3,
+  "nome": "INVESTINDO BEM",
+  "descricao": "INVESTINDO BEM",
+  "codigo": "INVEST_BEM",
+  "taxaADM": 5,
+  "aporteMinimo": 10000,
+  "rentabilidadeUltimo_3meses": 30,
+  "rentabilidade_Ultimo_12meses": 40,
+  "rentabilidade_Ultimo_24meses": 50
+}

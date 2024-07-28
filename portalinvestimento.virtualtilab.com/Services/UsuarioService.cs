@@ -1,4 +1,4 @@
-﻿using portalinvestimento.virtualtilab.com.Interfaces;
+﻿using portalinvestimento.virtualtilab.com.Interfaces.Service;
 
 namespace portalinvestimento.virtualtilab.com.Services
 {

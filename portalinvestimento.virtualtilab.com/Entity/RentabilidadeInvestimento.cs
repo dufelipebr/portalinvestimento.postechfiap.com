@@ -1,10 +1,11 @@
-﻿using static portalinvestimento.virtualtilab.com.Entity.Investimento;
+﻿using portalinvestimento.virtualtilab.com.DTO;
+using static portalinvestimento.virtualtilab.com.Entity.Ativo;
 
 namespace portalinvestimento.virtualtilab.com.Entity
 {
     public class RentabilidadeInvestimento : Entidade
     {
-        public Investimento Investimento { get; set; }
+        public Ativo Investimento { get; set; }
         public DateTime Data_Operacao { get; set; }
         public Decimal Valor_Rentabilidade { get; set; }
 
@@ -15,7 +16,7 @@ namespace portalinvestimento.virtualtilab.com.Entity
 
         public RentabilidadeInvestimento(CadastrarRentabilidadeDTO cad) 
         {
-            Investimento = new Investimento() { Id = cad.Id_Investimento };
+            Investimento = new Ativo() { Id = cad.Id_Investimento };
             Data_Operacao = cad.Data_Operacao;
             Valor_Rentabilidade = cad.Valor_Rentabilidade;
         }

@@ -1,46 +1,49 @@
 ﻿using investminimalapi.virtualitlab.com.Repository;
 using portalinvestimento.virtualtilab.com.Entity;
-using portalinvestimento.virtualtilab.com.Interfaces;
+using portalinvestimento.virtualtilab.com.Interfaces.Repository;
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using System.ComponentModel;
 using System.Data.SqlClient;
-using static portalinvestimento.virtualtilab.com.Entity.Investimento;
+using static portalinvestimento.virtualtilab.com.Entity.Ativo;
 
 namespace portalinvestimento.virtualtilab.com.Repository
 {
-    public class AplicacaoRepository : DapperRepository<Aplicacao>, IAplicacaoRepository
+    public class AplicacaoRepository : DapperRepository<Transacao>, IAplicacaoRepository
     {
         public AplicacaoRepository(IConfiguration configuration) : base(configuration)
         {
 
         }
 
-        public override void Alterar(Aplicacao entidade)
+        public override void Alterar(Transacao entidade)
         {
             using var dbConnection = new SqlConnection(ConnectionString);
 
 
             try
             {
+
                 using (SqlCommand cmd = dbConnection.CreateCommand())
                 {
                     //dbConnection.Query("");
                     cmd.CommandText = "update [Aplicacao] " +
                         "set " +
-                        " [Valor_Aplicacao] = @Valor_Aplicacao," +
-                        " [Data_Aplicacao] = @Data_Aplicacao, " +
+                        " [Preco] = @Preco," +
+                        " [Data_Transacao] = @Data_Transacao, " +
                         " [Rentabilidade] = @Rentabilidade, " +
                         " Last_Changed = @Last_Changed" +
                         " where Id_Investimento = @Id_Investimento " +
-                        " and Id_Usuario = @Id_Usuario ";
+                        " and Id_Portfolio = @Id_Portfolio ";
 
-                    cmd.Parameters.AddWithValue("@Valor_Aplicacao", entidade.Valor_Aplicacao);
-                    cmd.Parameters.AddWithValue("@Data_Aplicacao", entidade.Data_Aplicacao);
-                    cmd.Parameters.AddWithValue("@Rentabilidade", entidade.Rentabilidade);
+                    cmd.Parameters.AddWithValue("@Preco", entidade.Preco);
+                    cmd.Parameters.AddWithValue("@Quantidade", entidade.Quantidade);
+                    cmd.Parameters.AddWithValue("@Data_Transacao", entidade.Data_Transacao);
+                    //cmd.Parameters.AddWithValue("@Rentabilidade", entidade.Rentabilidade);
                     cmd.Parameters.AddWithValue("@Last_Changed", DateTime.Now);
                     cmd.Parameters.AddWithValue("@Id_Investimento", entidade.Investimento.Id);
-                    cmd.Parameters.AddWithValue("@Id_Usuario", entidade.Usuario.Id);
+                    cmd.Parameters.AddWithValue("@Id_Portfolio", entidade.Id_Portfolio);
 
                     dbConnection.Open();
                     cmd.ExecuteNonQuery();
@@ -57,7 +60,7 @@ namespace portalinvestimento.virtualtilab.com.Repository
 
         }
 
-        public override void Cadastrar(Aplicacao entidade)
+        public override void Cadastrar(Transacao entidade)
         {
             using var dbConnection = new SqlConnection(ConnectionString);
 
@@ -67,10 +70,10 @@ namespace portalinvestimento.virtualtilab.com.Repository
                 using (SqlCommand cmd = dbConnection.CreateCommand())
                 {
                     //dbConnection.Query("");
-                    cmd.CommandText = "insert into Aplicacao ([Id_Usuario], " +
+                    cmd.CommandText = "insert into Aplicacao ([Id_Portfolio], " +
                         "[Id_Investimento], " +
-                        "[Valor_Aplicacao], " +
-                        "[Data_Aplicacao], " +
+                        "[Preco], " +
+                        "[Data_Transacao], " +
                         "[Rentabilidade], " +
                         "[Deleted], " +
                         "[Slug], " +
@@ -79,8 +82,8 @@ namespace portalinvestimento.virtualtilab.com.Repository
                         ") values (" +
                         " @Id_Usuario, " +
                         " @Id_Investimento, " +
-                        " @Valor_Aplicacao, " +
-                        " @Data_Aplicacao, " +
+                        " @Preco, " +
+                        " @Data_Transacao, " +
                         " @Rentabilidade, " +
                         " @Deleted, " +
                         " @Slug, " +
@@ -88,10 +91,10 @@ namespace portalinvestimento.virtualtilab.com.Repository
                         " @Status " +
                         ")";
                     //cmd.Parameters.AddWithValue("@Id", entidade.Id);
-                    cmd.Parameters.AddWithValue("@Id_Usuario", entidade.Usuario.Id);
+                    cmd.Parameters.AddWithValue("@Id_Portfolio", entidade.Id_Portfolio);
                     cmd.Parameters.AddWithValue("@Id_Investimento", entidade.Investimento.Id);
-                    cmd.Parameters.AddWithValue("@Valor_Aplicacao", entidade.Valor_Aplicacao);
-                    cmd.Parameters.AddWithValue("@Data_Aplicacao", entidade.Data_Aplicacao);
+                    cmd.Parameters.AddWithValue("@Preco", entidade.Preco);
+                    cmd.Parameters.AddWithValue("@Data_Transacao", entidade.Data_Transacao);
                     cmd.Parameters.AddWithValue("@Rentabilidade", entidade.Rentabilidade);
                     cmd.Parameters.AddWithValue("@Deleted", 0);
                     cmd.Parameters.AddWithValue("@Slug", $"{DateTime.Now} registro criado");
@@ -111,7 +114,7 @@ namespace portalinvestimento.virtualtilab.com.Repository
             }
         }
 
-        public override void Deletar(Aplicacao entidade)
+        public override void Deletar(Transacao entidade)
         {
             using var dbConnection = new SqlConnection(ConnectionString);
 
@@ -125,7 +128,7 @@ namespace portalinvestimento.virtualtilab.com.Repository
                     cmd.CommandText = $"delete from Aplicacao where Id_Investimento= @Id_Investimento and Id_Usuario = @Id_Usuario";
                     //cmd.Parameters.AddWithValue("@Id", entidade.Id);
                     cmd.Parameters.AddWithValue("@Id_Investimento", entidade.Investimento.Id);
-                    cmd.Parameters.AddWithValue("@Id_Usuario", entidade.Usuario.Id);
+                    cmd.Parameters.AddWithValue("@Id_Portfolio", entidade.Id_Portfolio);
                     dbConnection.Open();
                     cmd.ExecuteNonQuery();
                 }
@@ -140,11 +143,11 @@ namespace portalinvestimento.virtualtilab.com.Repository
             }
         }
 
-        public Aplicacao ObterAplicacao(int user_Id, int investimento_Id)
+        public Transacao ObterAplicacao(int user_Id, int investimento_Id)
         {
             using (var dbConnection = new SqlConnection(ConnectionString))
             {
-                Aplicacao ap = null;
+                Transacao ap = null;
 
                 try
                 {
@@ -159,17 +162,18 @@ namespace portalinvestimento.virtualtilab.com.Repository
 
                     while (rd.Read())
                     {
-                        ap = new Aplicacao()
+                        ap = new Transacao()
                         {
                             //Id = Int32.Parse(rd["Id"].ToString()),
-                            Data_Aplicacao = (DateTime)rd["Data_Aplicacao"],
-                            Valor_Aplicacao = (Decimal)rd["Valor_Aplicacao"],
+                            Data_Transacao = (DateTime)rd["Data_Transacao"],
+                            Preco = (Decimal)rd["Preco"],
                             Rentabilidade = (Decimal)rd["Rentabilidade"], 
                             Ultima_Rentabilidade_Calculada = ((rd["Ultima_Rentabilidade_Calculada"] == DBNull.Value) ? DateTime.MinValue : (DateTime)rd["Last_Changed"])
                         };
 
-                        ap.Usuario = new Usuario() { Id = (int)rd["Id_Usuario"] };
-                        ap.Investimento = new Investimento() { Id = (int)rd["Id_Investimento"] };
+                        //ap.Usuario = new Portfolio() { Id = (int)rd["Id_Usuario"] };
+                        ap.Id_Portfolio = (int)rd["Id_Portfolio"];
+                        ap.Investimento = new Ativo() { Id = (int)rd["Id_Investimento"] };
                         /// implementar o Slug, Deleted... 
                         ap.Deleted = (bool)rd["Deleted"];
                         ap.PublishDate = (DateTime)rd["Publish_Date"];
@@ -191,9 +195,9 @@ namespace portalinvestimento.virtualtilab.com.Repository
             }
         }
 
-        public List<Aplicacao> ObterAplicacaoPorUserId(int user_Id)
+        public List<Transacao> ObterAplicacaoPorUserId(int user_Id)
         {
-            List<Aplicacao> list = new List<Aplicacao>();
+            List<Transacao> list = new List<Transacao>();
             using (var dbConnection = new SqlConnection(ConnectionString))
             {
                 try
@@ -208,17 +212,17 @@ namespace portalinvestimento.virtualtilab.com.Repository
 
                     while (rd.Read())
                     {
-                        Aplicacao ap = new Aplicacao()
+                        Transacao ap = new Transacao()
                         {
                             //Id = Int32.Parse(rd["Id"].ToString()),
-                            Data_Aplicacao = (DateTime)rd["Data_Aplicacao"],
-                            Valor_Aplicacao = (Decimal)rd["Valor_Aplicacao"],
+                            Data_Transacao = (DateTime)rd["Data_Transacao"],
+                            Preco = (Decimal)rd["Preco"],
                             Rentabilidade = (Decimal)rd["Rentabilidade"],
                             Ultima_Rentabilidade_Calculada = ((rd["Ultima_Rentabilidade_Calculada"] == DBNull.Value) ? DateTime.MinValue : (DateTime)rd["Last_Changed"])
                         };
 
-                        ap.Usuario = new Usuario() { Id = (int)rd["Id_Usuario"] };
-                        ap.Investimento = new Investimento() { Id = (int)rd["Id_Investimento"] };
+                        ap.Id_Portfolio = (int)rd["Id_Portfolio"];                         
+                        ap.Investimento = new Ativo() { Id = (int)rd["Id_Investimento"] };
                         /// implementar o Slug, Deleted... 
                         ap.Deleted = (bool)rd["Deleted"];
                         ap.PublishDate = (DateTime)rd["Publish_Date"];
@@ -241,16 +245,16 @@ namespace portalinvestimento.virtualtilab.com.Repository
             }
         }
 
-        public override Aplicacao ObterPorId(int id)
+        public override Transacao ObterPorId(int id)
         {
             throw new NotImplementedException();
         }
 
 
 
-        public override IList<Aplicacao> ObterTodos()
+        public override IList<Transacao> ObterTodos()
         {
-            List<Aplicacao> list = new List<Aplicacao>();
+            List<Transacao> list = new List<Transacao>();
             using (var dbConnection = new SqlConnection(ConnectionString))
             {
                 try
@@ -262,17 +266,18 @@ namespace portalinvestimento.virtualtilab.com.Repository
 
                     while (rd.Read())
                     {
-                        Aplicacao ap = new Aplicacao()
+                        Transacao ap = new Transacao()
                         {
                             //Id = (int) rd["Id"], -- não tem ID nessa tabela
-                            Data_Aplicacao = (DateTime)rd["Data_Aplicacao"],
-                            Valor_Aplicacao = (Decimal)rd["Valor_Aplicacao"],
+                            Data_Transacao = (DateTime)rd["Data_Transacao"],
+                            Preco = (Decimal)rd["Preco"],
                             Rentabilidade = (Decimal)rd["Rentabilidade"],
                             Ultima_Rentabilidade_Calculada = ((rd["Ultima_Rentabilidade_Calculada"] == DBNull.Value) ? DateTime.MinValue : (DateTime)rd["Last_Changed"])
                         };
 
-                        ap.Usuario = new Usuario() { Id = (int)rd["Id_Usuario"] };
-                        ap.Investimento = new Investimento() { Id = (int)rd["Id_Investimento"] };
+                        //ap.Usuario = new Portfolio() { Id = (int)rd["Id_Usuario"] };
+                        ap.Id_Portfolio = (int)rd["Id_Portfolio"];
+                        ap.Investimento = new Ativo() { Id = (int)rd["Id_Investimento"] };
                         /// implementar o Slug, Deleted... 
                         ap.Deleted = (bool)rd["Deleted"];
                         ap.PublishDate = (DateTime)rd["Publish_Date"];

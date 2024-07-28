@@ -1,8 +1,8 @@
 ﻿using investminimalapi.virtualitlab.com.Repository;
 using System.Data.SqlClient;
 using portalinvestimento.virtualtilab.com.Entity;
-using portalinvestimento.virtualtilab.com.Interfaces;
 using System.Collections.Generic;
+using portalinvestimento.virtualtilab.com.Interfaces.Repository;
 
 namespace portalinvestimento.virtualtilab.com.Repository
 {
@@ -30,12 +30,12 @@ namespace portalinvestimento.virtualtilab.com.Repository
                     //" ,CPF = @CPF " +
                     //" ,Codigo_Conta = @Codigo_Conta " +
                     //" ,Digito_Conta = @Digito_Conta " +
-                    " Saldo_Carteira = @Saldo_Carteira" +
+                  //  " Saldo_Carteira = @Saldo_Carteira" +
                     //" ,Deleted = @Deleted" +
                     //" ,Slug = @Slug " +
                     " , Last_Changed = @Last_Changed" +
                     " where Id = @Id";
-                cmd.Parameters.AddWithValue("@Saldo_Carteira", entidade.Saldo_Carteira);
+                //cmd.Parameters.AddWithValue("@Saldo_Carteira", entidade.Saldo_Carteira);
                 cmd.Parameters.AddWithValue("@Last_Changed", DateTime.Now);
                 cmd.Parameters.AddWithValue("@Id", entidade.Id);
                 //cmd.Parameters.AddWithValue("@Email", entidade.Email);
@@ -65,17 +65,12 @@ namespace portalinvestimento.virtualtilab.com.Repository
             {
                 using (SqlCommand cmd = dbConnection.CreateCommand())
                 { 
-                    //dbConnection.Query("");
                     cmd.CommandText = "insert into Usuario " +
                         "(" +
                         "Nome, " +
                         "Email, " +
                         "Senha, " +
                         "Tipo_Acesso, " +
-                        "CPF, " +
-                        "Codigo_Conta, " +
-                        "Digito_Conta, " +
-                        "Saldo_Carteira, " +
                         "Deleted, " +
                         "Slug, " +
                         "Publish_Date, " +
@@ -86,25 +81,16 @@ namespace portalinvestimento.virtualtilab.com.Repository
                         "@Email, " +
                         "@Senha, " +
                         "@Tipo_Acesso," +
-                        "@CPF, " +
-                        "@Codigo_Conta, " +
-                        "@Digito_Conta, " +
-                        "@Saldo_Carteira, " +
                         "@Deleted, " +
                         "@Slug, " +
                         "@Publish_Date, " +
                         "@Status" +
                      ")";
-                    //cmd.Parameters.AddWithValue("@Id", entidade.Id);
+
                     cmd.Parameters.AddWithValue("@Nome", entidade.Nome);
-                    cmd.Parameters.AddWithValue("@Email", entidade.Email);
+                    cmd.Parameters.AddWithValue("@Email", entidade.Codigo_Usuario);
                     cmd.Parameters.AddWithValue("@Senha", entidade.Senha);
                     cmd.Parameters.AddWithValue("@Tipo_Acesso", (int)entidade.TipoPermissao);
-                    cmd.Parameters.AddWithValue("@CPF", entidade.CPF);
-                    cmd.Parameters.AddWithValue("@Codigo_Conta", entidade.Codigo_Conta);
-                    cmd.Parameters.AddWithValue("@Digito_Conta", entidade.Digito_Conta);
-                    cmd.Parameters.AddWithValue("@Saldo_Carteira", entidade.Saldo_Carteira);
-
                     cmd.Parameters.AddWithValue("@Deleted", 0);
                     cmd.Parameters.AddWithValue("@Slug", $"{DateTime.Now} registro criado");
                     cmd.Parameters.AddWithValue("@Publish_Date", DateTime.Now);
@@ -181,13 +167,9 @@ namespace portalinvestimento.virtualtilab.com.Repository
                         list.Add(new Usuario() { 
                             Id = Int32.Parse(rd["Id"].ToString()), 
                             Nome = rd["Nome"].ToString(), 
-                            Email = rd["Email"].ToString(),
-                            //Senha = rd["Senha"].ToString(),
+                            Codigo_Usuario = rd["Email"].ToString(),
                             TipoPermissao = (EnTipoAcesso) Int32.Parse(rd["Tipo_Acesso"].ToString()),
-                            Codigo_Conta = (int) rd["Codigo_Conta"],
-                            Digito_Conta = (int)rd["Digito_Conta"],
-                            Saldo_Carteira = (decimal)rd["Saldo_Carteira"],
-                            CPF = rd["CPF"].ToString()
+
                         });
                     }
                 }
@@ -226,7 +208,7 @@ namespace portalinvestimento.virtualtilab.com.Repository
                     {
                         Id = Int32.Parse(rd["Id"].ToString()),
                         Nome = rd["Nome"].ToString(),
-                        Email = rd["Email"].ToString(),
+                        Codigo_Usuario = rd["Email"].ToString(),
                         Senha = rd["Senha"].ToString(),
                         TipoPermissao = (EnTipoAcesso)Int32.Parse(rd["Tipo_Acesso"].ToString())
                     };

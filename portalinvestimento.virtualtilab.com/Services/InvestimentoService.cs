@@ -1,11 +1,12 @@
-﻿using portalinvestimento.virtualtilab.com.Entity;
-using portalinvestimento.virtualtilab.com.Interfaces;
+﻿using portalinvestimento.virtualtilab.com.DTO;
+using portalinvestimento.virtualtilab.com.Entity;
+using portalinvestimento.virtualtilab.com.Interfaces.Service;
 
 namespace portalinvestimento.virtualtilab.com.Services
 {
-    public class InvestimentoService : IInvestimentoService
+    public class InvestimentoService : IAplicacaoService
     {
-        public string Create(Investimento obj)
+        public string Create(Ativo obj)
         {
             if (obj.Codigo == null || obj.Codigo.Length > 50)
                 return "O codigo precisa ser preenchido e deve ter no maximo 50 caracteres";
@@ -20,7 +21,7 @@ namespace portalinvestimento.virtualtilab.com.Services
             if (obj.TaxaADM <= 0 && obj.TaxaADM > 10)
                 return "A Taxa Administrativa deve ser maior que 0 e menor que 10";
 
-            if (obj.TipoInvestimento == 0)
+            if (obj.Tipo == 0)
                 return "A Tipo de Investimento não foi informado";
 
             if (obj.AporteMinimo == 0)
@@ -30,17 +31,17 @@ namespace portalinvestimento.virtualtilab.com.Services
         }
 
 
-        public Aplicacao CriarAplicacao(Usuario usuario, Investimento inv, CadastrarAplicacaoDTO dto)
+        public Transacao CriarAplicacao(Portfolio usuario, Ativo inv, CadastrarAplicacaoDTO dto)
         {
-            decimal saldoCarteira = usuario.Saldo_Carteira;
+            //decimal saldoCarteira = usuario.Saldo_Carteira;
 
-            if (dto.Valor_Aplicacao > saldoCarteira || saldoCarteira ==0)
-                throw new ArgumentException("valor da aplicação não poder ser maior que saldo da carteira.");
+            //if (dto.Valor_Aplicacao > saldoCarteira || saldoCarteira ==0)
+            //    throw new ArgumentException("valor da aplicação não poder ser maior que saldo da carteira.");
 
-            Aplicacao apl = new Aplicacao();
-            apl.Data_Aplicacao = DateTime.Now;
-            apl.Valor_Aplicacao = dto.Valor_Aplicacao;
-            apl.Usuario = usuario;
+            Transacao apl = new Transacao();
+            apl.Data_Transacao = DateTime.Now;
+            apl.Preco = dto.Valor_Aplicacao;
+            //apl.Usuario = usuario;
             apl.Investimento = inv;
             apl.Rentabilidade = 0;
 

@@ -1,6 +1,5 @@
-﻿
-using investminimalapi.virtualitlab.com.Interfaces;
-using portalinvestimento.virtualtilab.com.Entity;
+﻿using portalinvestimento.virtualtilab.com.Entity;
+using portalinvestimento.virtualtilab.com.Interfaces.Repository;
 
 namespace investminimalapi.virtualitlab.com.Repository
 {

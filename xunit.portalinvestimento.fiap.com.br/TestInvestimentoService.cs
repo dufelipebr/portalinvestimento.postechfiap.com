@@ -3,14 +3,14 @@ using Bogus.DataSets;
 using Moq;
 using portalinvestimento.virtualtilab.com;
 using portalinvestimento.virtualtilab.com.Entity;
-using portalinvestimento.virtualtilab.com.Interfaces;
 using portalinvestimento.virtualtilab.com.Services;
 using System.Collections.Specialized;
 using System.Net.NetworkInformation;
 using System.Runtime.ConstrainedExecution;
 using System.Security.Cryptography.Xml;
 using Xunit;
-using static portalinvestimento.virtualtilab.com.Entity.Investimento;
+using portalinvestimento.virtualtilab.com.Entity;
+using portalinvestimento.virtualtilab.com.Interfaces.Service;
 
 
 namespace xunit.portalinvestimento.fiap.com.br
@@ -41,12 +41,12 @@ namespace xunit.portalinvestimento.fiap.com.br
         [Trait("Categoria", "Validando Investimento")]
         public void Create_ShoulReturnSuccessMessage()
         {
-            var mock = new Mock<IInvestimentoService>();
-            mock.Setup(service => service.Create(It.IsAny<Investimento>())).Returns("Investimento ok!"); // codigo retorno succeso
+            var mock = new Mock<IAplicacaoService>();
+            mock.Setup(service => service.Create(It.IsAny<Ativo>())).Returns("Investimento ok!"); // codigo retorno succeso
             InvestimentoService s = new InvestimentoService();
 
-            Investimento investimento = new Investimento(
-                    Investimento.enTipoInvestimento.CDI,
+            Ativo investimento = new Ativo(
+                    Ativo.enTipoInvestimento.CDI,
                     "Simples Automático RF",
                     "Fundo mais simples do bradesco destinado para o povão",
                     "Simples_Automático_RF",
@@ -68,7 +68,7 @@ namespace xunit.portalinvestimento.fiap.com.br
         public void Investimento_ShouldThrowException_WhenCodigo_Empty()
         {
             // Arrange
-            var tipo = Investimento.enTipoInvestimento.CDI;
+            var tipo = Ativo.enTipoInvestimento.CDI;
             var nome = _faker.Random.String2(100);
             var descricao = _faker.Random.String2(500);
             var codigo = "";
@@ -79,7 +79,7 @@ namespace xunit.portalinvestimento.fiap.com.br
             var rent_24 = 40.0m;
 
             //act
-            var result = Assert.Throws<DomainException>(() => new Investimento(tipo, nome, descricao, codigo, taxaADM, aporteMinimo, rent_3, rent_12, rent_24));
+            var result = Assert.Throws<DomainException>(() => new Ativo(tipo, nome, descricao, codigo, taxaADM, aporteMinimo, rent_3, rent_12, rent_24));
             //Assert.Throws<DomainException>()
 
             //Assert
@@ -93,7 +93,7 @@ namespace xunit.portalinvestimento.fiap.com.br
         public void Investimento_ShouldThrowException_WhenCodigo_Higher()
         {
             // Arrange
-            var tipo = Investimento.enTipoInvestimento.CDI;
+            var tipo = Ativo.enTipoInvestimento.CDI;
             var nome = _faker.Random.String2(100);
             var descricao = _faker.Random.String2(500);
             var codigo = _faker.Random.String2(51); ;
@@ -104,7 +104,7 @@ namespace xunit.portalinvestimento.fiap.com.br
             var rent_24 = 40.0m;
 
             //act
-            var result = Assert.Throws<DomainException>(() => new Investimento(tipo, nome, descricao, codigo, taxaADM, aporteMinimo, rent_3, rent_12, rent_24));
+            var result = Assert.Throws<DomainException>(() => new Ativo(tipo, nome, descricao, codigo, taxaADM, aporteMinimo, rent_3, rent_12, rent_24));
             //Assert.Throws<DomainException>()
 
             //Assert
@@ -118,7 +118,7 @@ namespace xunit.portalinvestimento.fiap.com.br
         public void Investimento_ShouldThrowException_WhenNome_Empty()
         {
             // Arrange
-            var tipo = Investimento.enTipoInvestimento.CDI;
+            var tipo = Ativo.enTipoInvestimento.CDI;
             var nome = string.Empty;
             var descricao = _faker.Random.String2(500);
             var codigo = _faker.Random.String2(10);
@@ -129,7 +129,7 @@ namespace xunit.portalinvestimento.fiap.com.br
             var rent_24 = 40.0m;
 
             //act
-            var result = Assert.Throws<DomainException>(() => new Investimento(tipo, nome, descricao, codigo, taxaADM, aporteMinimo, rent_3, rent_12, rent_24));
+            var result = Assert.Throws<DomainException>(() => new Ativo(tipo, nome, descricao, codigo, taxaADM, aporteMinimo, rent_3, rent_12, rent_24));
             //Assert.Throws<DomainException>()
 
             //Assert
@@ -143,7 +143,7 @@ namespace xunit.portalinvestimento.fiap.com.br
         public void Investimento_ShouldThrowException_WhenNome_Higher()
         {
             // Arrange
-            var tipo = Investimento.enTipoInvestimento.CDI;
+            var tipo = Ativo.enTipoInvestimento.CDI;
             var nome = _faker.Random.String2(101);
             var descricao = _faker.Random.String2(500);
             var codigo = _faker.Random.String2(10);
@@ -154,7 +154,7 @@ namespace xunit.portalinvestimento.fiap.com.br
             var rent_24 = 40.0m;
 
             //act
-            var result = Assert.Throws<DomainException>(() => new Investimento(tipo, nome, descricao, codigo, taxaADM, aporteMinimo, rent_3, rent_12, rent_24));
+            var result = Assert.Throws<DomainException>(() => new Ativo(tipo, nome, descricao, codigo, taxaADM, aporteMinimo, rent_3, rent_12, rent_24));
             //Assert.Throws<DomainException>()
 
             //Assert
@@ -193,7 +193,7 @@ namespace xunit.portalinvestimento.fiap.com.br
         public void Investimento_ShouldThrowException_WhenTaxaAdm_Lower()
         {
             // Arrange
-            var tipo = Investimento.enTipoInvestimento.CDI;
+            var tipo = Ativo.enTipoInvestimento.CDI;
             var nome = _faker.Random.String2(100);
             var descricao = _faker.Random.String2(500);
             var codigo = _faker.Random.String2(10);
@@ -204,7 +204,7 @@ namespace xunit.portalinvestimento.fiap.com.br
             var rent_24 = 40.0m;
 
             //act
-            var result = Assert.Throws<DomainException>(() => new Investimento(tipo, nome, descricao, codigo, taxaADM, aporteMinimo, rent_3, rent_12, rent_24));
+            var result = Assert.Throws<DomainException>(() => new Ativo(tipo, nome, descricao, codigo, taxaADM, aporteMinimo, rent_3, rent_12, rent_24));
             //Assert.Throws<DomainException>()
 
             //Assert
@@ -217,7 +217,7 @@ namespace xunit.portalinvestimento.fiap.com.br
         public void Investimento_ShouldThrowException_WhenTaxaAdm_Higher()
         {
             // Arrange
-            var tipo = Investimento.enTipoInvestimento.CDI;
+            var tipo = Ativo.enTipoInvestimento.CDI;
             var nome = _faker.Random.String2(100);
             var descricao = _faker.Random.String2(500);
             var codigo = _faker.Random.String2(10);
@@ -228,7 +228,7 @@ namespace xunit.portalinvestimento.fiap.com.br
             var rent_24 = 40.0m;
 
             //act
-            var result = Assert.Throws<DomainException>(() => new Investimento(tipo, nome, descricao, codigo, taxaADM, aporteMinimo, rent_3, rent_12, rent_24));
+            var result = Assert.Throws<DomainException>(() => new Ativo(tipo, nome, descricao, codigo, taxaADM, aporteMinimo, rent_3, rent_12, rent_24));
             //Assert.Throws<DomainException>()
 
             //Assert
@@ -241,7 +241,7 @@ namespace xunit.portalinvestimento.fiap.com.br
         public void Investimento_ShouldThrowException_WhenAporteMinimo_Lower()
         {
             // Arrange
-            var tipo = Investimento.enTipoInvestimento.CDI;
+            var tipo = Ativo.enTipoInvestimento.CDI;
             var nome = _faker.Random.String2(100);
             var descricao = _faker.Random.String2(500);
             var codigo = _faker.Random.String2(10);
@@ -253,7 +253,7 @@ namespace xunit.portalinvestimento.fiap.com.br
 
             //act
             var result = Assert.Throws<DomainException>(() => 
-            new Investimento(
+            new Ativo(
                 tipo, nome, descricao, codigo, taxaADM, aporteMinimo, rent_3, rent_12, rent_24));
             //Assert.Throws<DomainException>()
 
@@ -268,7 +268,7 @@ namespace xunit.portalinvestimento.fiap.com.br
         public void Investimento_ShouldThrowException_WhenAporteMinimo_Higher()
         {
             // Arrange
-            var tipo = Investimento.enTipoInvestimento.CDI;
+            var tipo = Ativo.enTipoInvestimento.CDI;
             var nome = _faker.Random.String2(100);
             var descricao = _faker.Random.String2(500);
             var codigo = _faker.Random.String2(10);
@@ -280,7 +280,7 @@ namespace xunit.portalinvestimento.fiap.com.br
 
             //act
             var result = Assert.Throws<DomainException>(() =>
-            new Investimento(
+            new Ativo(
                 tipo, nome, descricao, codigo, taxaADM, aporteMinimo, rent_3, rent_12, rent_24));
             //Assert.Throws<DomainException>()
 

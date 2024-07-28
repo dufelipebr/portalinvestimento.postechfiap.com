@@ -1,9 +1,9 @@
 ﻿using System.ComponentModel.DataAnnotations;
-using static portalinvestimento.virtualtilab.com.Entity.Investimento;
+using static portalinvestimento.virtualtilab.com.Entity.Ativo;
 
-namespace portalinvestimento.virtualtilab.com.Entity
+namespace portalinvestimento.virtualtilab.com.DTO
 {
-    public class CadastrarInvestimentoDTO
+    public class CadastrarAtivoDTO
     {
         public int Id;
         public enTipoInvestimento TipoInvestimento { get; set; }
@@ -17,9 +17,9 @@ namespace portalinvestimento.virtualtilab.com.Entity
         public decimal Rentabilidade_Ultimo_24meses { get; set; }
     }
 
-    public class ModificarInvestimentoDTO
+    public class ModificarAtivoDTO
     {
-        public int Id { get; set; } 
+        public int Id { get; set; }
         public enTipoInvestimento TipoInvestimento { get; set; }
         public string Nome { get; set; }
         public string Codigo { get; set; }

@@ -1,8 +1,10 @@
 ﻿
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
+using portalinvestimento.virtualtilab.com.DTO;
 using portalinvestimento.virtualtilab.com.Entity;
-using portalinvestimento.virtualtilab.com.Interfaces;
+using portalinvestimento.virtualtilab.com.Interfaces.Repository;
+using portalinvestimento.virtualtilab.com.Interfaces.Service;
 using portalinvestimento.virtualtilab.com.Services;
 namespace portalinvestimento.virtualtilab.com.Controllers
 {
@@ -87,7 +89,7 @@ namespace portalinvestimento.virtualtilab.com.Controllers
             try
             {
                 var resultado = _usuarioRepository.ObterTodos().
-                    Where(x => x.ContaCompleta == dto.ContaCompleta).FirstOrDefault();
+                    Where(x => x.Email == dto.Email).FirstOrDefault();
 
                 if (resultado != null)
                     return BadRequest("Codigo de conta já existente. Informar outra conta!");
@@ -122,15 +124,15 @@ namespace portalinvestimento.virtualtilab.com.Controllers
         /// <param name="id">usuario id</param>
         /// <returns>string - user excluido com sucesso</returns>
         [HttpDelete("excluir_usuario")]
-        public IActionResult DeleteUser(int id)
+        public IActionResult DeleteUser(AlterarUsuarioDTO user)
         {
             _logger.Log(LogLevel.Information, "Iniciando DeleteUser...");
 
             try
             {
                 //return _usuarioRepository.ObterTodos();
-                Usuario u = new Usuario();
-                u.Id = id;
+                Usuario u = new Usuario(user);
+                //u.Id = id;
                 _usuarioRepository.Deletar(u);
                 return Ok("user excluido com sucesso");
             }

@@ -2,22 +2,22 @@
 using System.Data.SqlClient;
 using Microsoft.OpenApi.Models;
 using portalinvestimento.virtualtilab.com.Entity;
-using portalinvestimento.virtualtilab.com.Interfaces;
 using System.Collections;
 using System.Collections.Generic;
-using static portalinvestimento.virtualtilab.com.Entity.Investimento;
+using static portalinvestimento.virtualtilab.com.Entity.Ativo;
+using portalinvestimento.virtualtilab.com.Interfaces.Repository;
 
 namespace portalinvestimento.virtualtilab.com.Repository
 {
-    public class InvestimentoRepository : DapperRepository<Investimento>, IInvestimentoRepository
+    public class AtivoRepository : DapperRepository<Ativo>, IAtivoRepository
     {
-        public InvestimentoRepository(IConfiguration configuration) : base(configuration)
+        public AtivoRepository(IConfiguration configuration) : base(configuration)
         {
 
         }
 
 
-        public override void Alterar(Investimento entidade)
+        public override void Alterar(Ativo entidade)
         {
             using var dbConnection = new SqlConnection(ConnectionString);
 
@@ -43,7 +43,7 @@ namespace portalinvestimento.virtualtilab.com.Repository
                         " Status = @Status " +
                         " where Id = @Id";
                     
-                    cmd.Parameters.AddWithValue("@Id_Tipo_Investimento", (int) entidade.TipoInvestimento);
+                    cmd.Parameters.AddWithValue("@Id_Tipo_Investimento", (int) entidade.Tipo);
                     cmd.Parameters.AddWithValue("@Nome", entidade.Nome);
                     cmd.Parameters.AddWithValue("@Codigo", entidade.Codigo);
                     cmd.Parameters.AddWithValue("@Taxa_ADM", entidade.TaxaADM);
@@ -71,7 +71,7 @@ namespace portalinvestimento.virtualtilab.com.Repository
             }
         }
 
-        public override void Cadastrar(Investimento entidade)
+        public override void Cadastrar(Ativo entidade)
         {
             using var dbConnection = new SqlConnection(ConnectionString);
 
@@ -109,7 +109,7 @@ namespace portalinvestimento.virtualtilab.com.Repository
                         "@Publish_Date, " +
                         "@Status)";
                     //cmd.Parameters.AddWithValue("@Id", entidade.Id);
-                    cmd.Parameters.AddWithValue("@Id_Tipo_Investimento", (int) entidade.TipoInvestimento);
+                    cmd.Parameters.AddWithValue("@Id_Tipo_Investimento", (int) entidade.Tipo);
                     cmd.Parameters.AddWithValue("@Nome", entidade.Nome.ToString());
                     cmd.Parameters.AddWithValue("@Codigo", entidade.Codigo.ToString());
                     cmd.Parameters.AddWithValue("@Descricao", entidade.Descricao.ToString());
@@ -137,7 +137,7 @@ namespace portalinvestimento.virtualtilab.com.Repository
             }
         }
 
-        public override void Deletar(Investimento entidade)
+        public override void Deletar(Ativo entidade)
         {
             using var dbConnection = new SqlConnection(ConnectionString);
 
@@ -165,14 +165,14 @@ namespace portalinvestimento.virtualtilab.com.Repository
             }
         }
 
-        public override Investimento ObterPorId(int id)
+        public override Ativo ObterPorId(int id)
         {
             return this.ObterTodos().Where(x => x.Id == id).FirstOrDefault();
         }
 
-        public override IList<Investimento> ObterTodos()
+        public override IList<Ativo> ObterTodos()
         {
-            IList<Investimento> list = new List<Investimento>();
+            IList<Ativo> list = new List<Ativo>();
             using (var dbConnection = new SqlConnection(ConnectionString))
             {
                 try
@@ -185,14 +185,14 @@ namespace portalinvestimento.virtualtilab.com.Repository
  
                     while (rd.Read())
                     {
-                        Investimento investimento = new Investimento()
+                        Ativo investimento = new Ativo()
                         {
                             Id = Int32.Parse(rd["Id"].ToString()),
                             Codigo = rd["Codigo"].ToString(),
                             Nome = rd["Nome"].ToString(),
                             Descricao = rd["Descricao"].ToString(),
                             AporteMinimo = (decimal)rd["Aporte_Minimo"],
-                            TipoInvestimento = (enTipoInvestimento)Int32.Parse(rd["Id_Tipo_Investimento"].ToString()),
+                            Tipo = (enTipoInvestimento)Int32.Parse(rd["Id_Tipo_Investimento"].ToString()),
                             TaxaADM = (decimal)rd["Taxa_Adm"],
                             RentabilidadeUltimo_3meses = (decimal)rd["Rentabilidade_Ultimo_3meses"],
                             Rentabilidade_Ultimo_12meses = (decimal)rd["Rentabilidade_Ultimo_12meses"],

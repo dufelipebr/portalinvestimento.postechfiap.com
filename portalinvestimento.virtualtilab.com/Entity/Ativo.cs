@@ -1,17 +1,18 @@
 using System.Globalization;
 using System.Runtime.ConstrainedExecution;
+using portalinvestimento.virtualtilab.com.DTO;
 
 namespace portalinvestimento.virtualtilab.com.Entity
 {
-    public class Investimento : Entidade
+    public class Ativo : Entidade
     {
-        public Investimento()
+        public Ativo()
         {
 
         }
-        public Investimento(enTipoInvestimento tipo, string nome, string descricao, string codigo, decimal taxaADM, decimal aporteMinimo, decimal rent_3, decimal rent_12, decimal rent_24)
+        public Ativo(enTipoInvestimento tipo, string nome, string descricao, string codigo, decimal taxaADM, decimal aporteMinimo, decimal rent_3, decimal rent_12, decimal rent_24)
         {
-            TipoInvestimento = tipo;
+            Tipo = tipo;
             Nome = nome;
             this.Descricao = descricao;
             Codigo = codigo;
@@ -28,11 +29,11 @@ namespace portalinvestimento.virtualtilab.com.Entity
 
         
 
-        public Investimento(CadastrarInvestimentoDTO cad_dto)
+        public Ativo(CadastrarAtivoDTO cad_dto)
         {
         
             this.Nome = cad_dto.Nome;
-            this.TipoInvestimento = cad_dto.TipoInvestimento;
+            this.Tipo = cad_dto.TipoInvestimento;
             this.AporteMinimo = cad_dto.AporteMinimo;
             this.Codigo = cad_dto.Codigo;
             this.TaxaADM = cad_dto.TaxaADM;
@@ -44,11 +45,11 @@ namespace portalinvestimento.virtualtilab.com.Entity
             //ValidateEntity(); 
         }
 
-        public Investimento(ModificarInvestimentoDTO cad_dto)
+        public Ativo(ModificarAtivoDTO cad_dto)
         {
 
             this.Nome = cad_dto.Nome;
-            this.TipoInvestimento = cad_dto.TipoInvestimento;
+            this.Tipo = cad_dto.TipoInvestimento;
             this.AporteMinimo = cad_dto.AporteMinimo;
             this.Codigo = cad_dto.Codigo;
             this.TaxaADM = cad_dto.TaxaADM;
@@ -66,9 +67,9 @@ namespace portalinvestimento.virtualtilab.com.Entity
 
         public enum enTipoInvestimento
         {
-            CDB, Acoes, CDI, LDI_LDA, Tesouro
+            CDB, Acoes, CDI, LDI_LDA, Tesouro, Cripto
         }
-        public enTipoInvestimento TipoInvestimento { get; set; }
+        public enTipoInvestimento Tipo { get; set; }
 
         public string Nome { get; set; }
 
@@ -99,7 +100,7 @@ namespace portalinvestimento.virtualtilab.com.Entity
             AssertionConcern.AssertArgumentNotEmpty(Nome, "Nome precisa ser preenchido.");
             AssertionConcern.AssertArgumentLength(Nome, 100, "Nome do Investimento precisa ter no maximo 100 caracteres.");
 
-            AssertionConcern.AssertArgumentNotEquals(TipoInvestimento, 0, "Tipo Investimento precisa ser preenchido");
+            AssertionConcern.AssertArgumentNotEquals(Tipo, 0, "Tipo Investimento precisa ser preenchido");
             
             AssertionConcern.AssertArgumentRange((double)TaxaADM, 0.1, 10, "Taxa ADM precisa estar entre 0.1 e 10.");
             AssertionConcern.AssertArgumentRange((double)AporteMinimo, 0.1, 1000000, "Aporte Minimo precisa ser maior que 0 e menor que 1.000.00,00");

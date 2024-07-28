@@ -8,11 +8,13 @@ GO
 SET QUOTED_IDENTIFIER ON
 GO
 
-DROP TABLE [dbo].[Aplicacao]
+DROP TABLE [dbo].[Rentabilidade_Investimento]
+DROP TABLE [Transacao]
 DROP TABLE [dbo].[Investimento]
 DROP TABLE [dbo].[TipoInvestimento]
+DROP TABLE [dbo].[Portfolio]
 DROP TABLE [dbo].[Usuario]
-DROP TABLE [dbo].[Rentabilidade_Investimento]
+
 GO
 CREATE TABLE [dbo].[Usuario](
 	[Id] [int] IDENTITY(1,1) NOT NULL PRIMARY KEY,
@@ -20,10 +22,10 @@ CREATE TABLE [dbo].[Usuario](
 	[Email] [varchar](100) NOT NULL,
 	[Senha] [varchar](100) NOT NULL, 
 	[Tipo_Acesso] [smallint] NOT NULL, 
-	[CPF] varchar(50) not null, 
-	Codigo_Conta int NOT NULL, 
-	Digito_Conta int NOT NULL, 
-	Saldo_Carteira decimal(16,4) NOT NULL, 
+	--[CPF] varchar(50) not null, 
+	--Codigo_Conta int NOT NULL, 
+	--Digito_Conta int NOT NULL, 
+	--Saldo_Carteira decimal(16,4) NOT NULL, 
 
 	Deleted bit, 
 	Slug varchar(100) null, 
@@ -32,18 +34,52 @@ CREATE TABLE [dbo].[Usuario](
 	Status smallint null, 
 
 	CONSTRAINT AK_Usuario_Email UNIQUE(Email)  ,
-	CONSTRAINT AK_Usuario_Conta UNIQUE(Codigo_Conta,Digito_Conta)
+	--CONSTRAINT AK_Usuario_Conta UNIQUE(Codigo_Conta,Digito_Conta)
 ) ON [PRIMARY]
 GO
+CREATE TABLE [dbo].[Portfolio](
+	Id int IDENTITY(1,1) NOT NULL PRIMARY KEY, 
+	Id_Usuario int not null,
+	Nome varchar(50) not null, 
+	Descricao varchar(100) not null, 
+	Codigo varchar(10) not null,
+	--Codigo_Conta int NOT NULL, 
+	--Digito_Conta int NOT NULL, 
+	--Saldo_Carteira decimal(16,4) NOT NULL, 
 
-CREATE TABLE [dbo].[TipoInvestimento]
-(
-	Id int not null primary key, 
-	Tipo_Investimento varchar(50) not null, 
+	Deleted bit, 
+	Slug varchar(100) null, 
+	Publish_Date datetime null, 
 	Last_Changed datetime null, 
-	Status smallint null 
-)
+	Status smallint null, 
+
+	--CONSTRAINT AK_Portfolio_Usuario UNIQUE(Id_Usuario),
+	FOREIGN KEY (id_Usuario) REFERENCES Usuario(Id),
+	--,	--CONSTRAINT AK_Usuario_Conta UNIQUE(Codigo_Conta,Digito_Conta)
+) ON [PRIMARY]
 GO
+--CREATE TABLE [dbo].[PortfolioUsuario]
+--(
+--	id_Usuario int not null, 
+--	id_Portfolio int not null, 
+--	Deleted bit, 
+--	Slug varchar(100) null, 
+--	Publish_Date datetime null, 
+--	Last_Changed datetime null, 
+--	Status smallint null,
+--	CONSTRAINT AK_PortfolioUsuario UNIQUE(id_Usuario, id_Portfolio),
+--	FOREIGN KEY (id_Usuario) REFERENCES Usuario(Id),
+--	FOREIGN KEY (id_Portfolio) REFERENCES Portfolio(Id),
+--)
+GO
+--CREATE TABLE [dbo].[TipoInvestimento]
+--(
+--	Id int not null primary key, 
+--	Tipo_Investimento varchar(50) not null, 
+--	Last_Changed datetime null, 
+--	Status smallint null 
+--)
+--GO
 
 CREATE TABLE [dbo].[Investimento](
 	[Id] [int] IDENTITY(1,1) NOT NULL PRIMARY KEY,
@@ -67,11 +103,14 @@ CREATE TABLE [dbo].[Investimento](
 ) ON [PRIMARY]
 GO
 
-CREATE TABLE [dbo].[Aplicacao](
-	[Id_Usuario] [int] NOT NULL ,
-	[Id_Investimento] [int] NOT NULL ,
-	[Valor_Aplicacao] decimal(16,4) NOT NULL,
-	[Data_Aplicacao] datetime NOT NULL,
+CREATE TABLE [dbo].[Transacao](
+	Id int identity(1,1) not null primary key, 
+	[Id_Portfolio] int NOT NULL,
+	[Id_Investimento] int NOT NULL,
+	[Tipo_Transacao] char(1) not null, -- C - Compra - V - Venda
+	[Preco] decimal(16,4) NOT NULL,
+	[Quantidade] decimal(16,4) NOT NULL, 
+	[Data_Transacao] datetime NOT NULL,
 	[Rentabilidade] decimal(16,4) not null,
 	[Ultima_Rentabilidade_Calculada] datetime null,
 
@@ -81,9 +120,9 @@ CREATE TABLE [dbo].[Aplicacao](
 	Last_Changed datetime null, 
 	Status smallint null, 
 
-	CONSTRAINT AK_Aplicacao_Investimento UNIQUE (Id_Usuario, Id_Investimento),
+	CONSTRAINT AK_Aplicacao_Investimento UNIQUE (Id_Portfolio, Id_Investimento),
 	FOREIGN KEY ([Id_Investimento]) REFERENCES Investimento(Id),
-	FOREIGN KEY ([Id_Usuario]) REFERENCES Usuario(Id)
+	FOREIGN KEY (Id_Portfolio) REFERENCES Portfolio(Id)
 ) ON [PRIMARY]
 GO
 

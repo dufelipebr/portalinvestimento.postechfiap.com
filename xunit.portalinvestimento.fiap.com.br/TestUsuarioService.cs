@@ -1,5 +1,6 @@
 ﻿using Microsoft.Extensions.FileSystemGlobbing.Internal;
 using Microsoft.Extensions.Primitives;
+using portalinvestimento.virtualtilab.com.DTO;
 using portalinvestimento.virtualtilab.com.Entity;
 using portalinvestimento.virtualtilab.com.Services;
 using System;
@@ -22,10 +23,10 @@ namespace xunit.portalinvestimento.fiap.com.br
             CadastrarUsuarioDTO dto = new CadastrarUsuarioDTO();
             dto.Email = "du.felipe.br@gmail.com";
             dto.Senha = "123456";
-            dto.Saldo_Carteira = 0;
-            dto.Codigo_Conta = 1;
-            dto.Digito_Conta = 1;
-            dto.CPF = "291.995.888-70";
+            //dto.Saldo_Carteira = 0;
+            //dto.Codigo_Conta = 1;
+            //dto.Digito_Conta = 1;
+            //dto.CPF = "291.995.888-70";
             dto.Nome = "carlos oliveira";
             dto.Senha = "@123456cC";
             //act
@@ -54,15 +55,15 @@ namespace xunit.portalinvestimento.fiap.com.br
         {
             // Arrange
             AlterarUsuarioDTO dto = new AlterarUsuarioDTO();
-            //dto.Email = "du.felipe.br@gmail.com";
+            dto.Email = "du.felipe.br@gmail.com";
             //dto.Senha = "123456";
-            dto.Saldo_Carteira = 10m;
+            //dto.Saldo_Carteira = 10m;
             //dto.Codigo_Conta = 1;
             //dto.Digito_Conta = 1;
             //dto.CPF = "291.995.888-70";
-            //dto.Nome = "carlos oliveira";
+            dto.Nome = "carlos oliveira";
             //dto.Senha = "@123456cC";
-            dto.Id = 1;
+            //dto.Id = 1;
             //act
 
             var result = "";

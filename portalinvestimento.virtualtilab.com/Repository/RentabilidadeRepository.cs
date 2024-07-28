@@ -1,11 +1,11 @@
 ﻿using investminimalapi.virtualitlab.com.Repository;
 using portalinvestimento.virtualtilab.com.Entity;
-using portalinvestimento.virtualtilab.com.Interfaces;
+using portalinvestimento.virtualtilab.com.Interfaces.Repository;
 using System.Collections;
 using System.Collections.Generic;
 using System.ComponentModel;
 using System.Data.SqlClient;
-using static portalinvestimento.virtualtilab.com.Entity.Investimento;
+using static portalinvestimento.virtualtilab.com.Entity.Ativo;
 
 namespace portalinvestimento.virtualtilab.com.Repository
 {
@@ -160,7 +160,7 @@ namespace portalinvestimento.virtualtilab.com.Repository
                             Valor_Rentabilidade = (Decimal)rd["Valor_Rentabilidade"],
                         };
 
-                        reg.Investimento = new Investimento() { Id = (int)rd["Id_Investimento"] };
+                        reg.Investimento = new Ativo() { Id = (int)rd["Id_Investimento"] };
                         /// implementar o Slug, Deleted... 
                         reg.Deleted = (bool)rd["Deleted"];
                         reg.PublishDate = (DateTime)rd["Publish_Date"];
@@ -210,7 +210,7 @@ namespace portalinvestimento.virtualtilab.com.Repository
                             Valor_Rentabilidade = (Decimal)rd["Valor_Rentabilidade"],
                         };
 
-                        reg.Investimento = new Investimento() { Id = (int)rd["Id_Investimento"] };
+                        reg.Investimento = new Ativo() { Id = (int)rd["Id_Investimento"] };
                         /// implementar o Slug, Deleted... 
                         reg.Deleted = (bool)rd["Deleted"];
                         reg.PublishDate = (DateTime)rd["Publish_Date"];
