@@ -82,7 +82,7 @@ jobs:
       - name: 'Az CLI login without subscription'
         uses: azure/login@v1
         with:
-          creds: ${{ secrets.AZURE_CREDENTIALS }}
+          creds: ${{ secrets.APIFIAPINVEST28_6FD5 }}
           allow-no-subscriptions: true
 
       - name: Deploy to Azure Web App
