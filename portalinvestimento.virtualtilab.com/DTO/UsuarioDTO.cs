@@ -17,5 +17,7 @@ namespace portalinvestimento.virtualtilab.com.DTO
         public string Email { get; set; }
         public EnTipoAcesso TipoAcesso { get; set; }
 
+        public int Id { get; set; }
+
     }
 }

@@ -63,7 +63,7 @@ namespace xunit.portalinvestimento.fiap.com.br
             //dto.CPF = "291.995.888-70";
             dto.Nome = "carlos oliveira";
             //dto.Senha = "@123456cC";
-            //dto.Id = 1;
+            dto.Id = 1;
             //act
 
             var result = "";

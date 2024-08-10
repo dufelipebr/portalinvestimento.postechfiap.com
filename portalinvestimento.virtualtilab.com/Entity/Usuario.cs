@@ -34,6 +34,7 @@ namespace portalinvestimento.virtualtilab.com.Entity
             //this.Senha = cad.Senha;
             this.TipoPermissao = cad.TipoAcesso;
             this.Email = cad.Email;
+            this.Id = cad.Id;
             //this.Digito_Conta = cad.Digito_Conta;
             //this.Codigo_Conta = cad.Codigo_Conta;
             //this.CPF = cad.CPF;
